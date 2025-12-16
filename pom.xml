@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <groupId>dev.yonel</groupId>
+    <artifactId>telegrambot-spring-boot-starter</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+    <name>Telegram Bot Spring Boot Starter</name>
+    <description>Spring Boot Starter for Telegram Bot API integration</description>
+
+    <url>https://github.com/yoneljorge/telegrambot-spring-boot-starter</url>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.5.7</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+    <properties>
+        <java.version>17</java.version>
+        <telegrambots-spring-boot-starter.version>6.9.7.1</telegrambots-spring-boot-starter.version>
+    </properties>
+
+
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots-spring-boot-starter</artifactId>
+            <version>${telegrambots-spring-boot-starter.version}</version>
+        </dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+            <!-- Plugin para compilar y generar JAR estándar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <!-- Plugin para generar JAR con fuentes -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+	</build>
+    <!-- CONFIGURACIÓN PARA PUBLICAR EN GITHUB PACKAGES -->
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub yoneljorge Apache Maven Packages</name>
+            <url>https://maven.pkg.github.com/yoneljorge/telegrambot-spring-boot-starter</url>
+        </repository>
+    </distributionManagement>
+</project>
