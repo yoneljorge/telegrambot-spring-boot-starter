@@ -1,0 +1,11 @@
+app:
+  url: https://my-test-app.com
+telegram:
+  path: /telegram
+  webhook:
+    enabled: true
+  bot:
+    test:
+      token: "123456:ABC-DEF"
+      username: "test_bot"
+      enabled: true
