@@ -46,7 +46,7 @@ public class WebhookRegistrationService {
                     .body(requestBody)
                     .retrieve()
                     .toBodilessEntity();
-            log.info("Webhook '{}' has been enabled", webhookUrl);
+            log.debug("Webhook '{}' has been enabled", webhookUrl);
         }catch (Exception e){
             log.error("Webhook '{}' couldn't be enabled: {}", webhookUrl, e.getMessage());
         }

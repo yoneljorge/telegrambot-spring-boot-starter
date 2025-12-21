@@ -20,10 +20,6 @@ import java.util.List;
 @ComponentScan(basePackages = "dev.yonel.telegrambot_spring_boot_starter")
 public class TelegramBotAutoConfiguration {
 
-    public TelegramBotAutoConfiguration(){
-        System.out.println(">>>> ¡EL STARTER SE HA CARGADO CORRECTAMENTE! <<<<");
-    }
-
     // --- COMPONENTES CORE ---
 
     @Bean

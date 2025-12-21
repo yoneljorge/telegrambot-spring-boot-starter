@@ -1,0 +1,24 @@
+name: Publicar en Maven Central
+on:
+  release:
+    types: [created] # Se activa cuando creas una versión en GitHub
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          server-id: ossrh # ID del servidor en tu settings.xml
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+
+      - name: Publicar con Maven
+        run: mvn --batch-mode clean deploy -P release

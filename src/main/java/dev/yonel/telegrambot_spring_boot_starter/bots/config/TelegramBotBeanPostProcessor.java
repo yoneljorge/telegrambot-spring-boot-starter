@@ -23,14 +23,26 @@ public class TelegramBotBeanPostProcessor implements BeanPostProcessor {
             if(beanClass.isAnnotationPresent(TelegramBot.class)){
                 TelegramBot annotation = beanClass.getAnnotation(TelegramBot.class);
 
+                // Verificamos si tiene un context-path
+                String contextPath = null;
+                try {
+                     contextPath = environment.getProperty("server.servlet.context-path");
+                }catch (Exception e){
+
+                }
                 // Extraemos los valores
                 TelegramBotProperties props = new TelegramBotProperties();
                 props.setId(annotation.id());
                 props.setToken(environment.getProperty(annotation.prefix() + ".token"));
                 props.setUsername(environment.getProperty(annotation.prefix() + ".username"));
-                props.setPath(environment.getProperty("telegram.path") + "/" +
-                        environment.getProperty(annotation.prefix() + ".token"));
-
+                if(contextPath != null && !contextPath.isEmpty()){
+                    props.setPath(contextPath +
+                            environment.getProperty("telegram.path") + "/" +
+                            environment.getProperty(annotation.prefix() + ".token"));
+                }else{
+                    props.setPath(environment.getProperty("telegram.path") + "/" +
+                            environment.getProperty(annotation.prefix() + ".token"));
+                }
                 bot.setBotProps(props);
             }
         }

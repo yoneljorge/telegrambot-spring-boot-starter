@@ -9,14 +9,23 @@ Este es un **Spring Boot Starter** personalizado para integrar múltiples bots d
 - **Gestión de Colas**: Procesamiento de mensajes eficiente mediante `MessageQueueService`.
 - **Simplificado**: Solo extiende de una clase y ya tienes un bot funcional.
 
-## 🛠️ Instalación
+## 📦 Instalación
 
-Actualmente, puedes clonar este repositorio e instalarlo en tu repositorio local de Maven:
+Añade la siguiente dependencia a tu proyecto pom.xml:
+XML
 
-```bash
-git clone [https://github.com/tu-usuario/telegrambot-spring-boot-starter.git](https://github.com/tu-usuario/telegrambot-spring-boot-starter.git)
-cd telegrambot-spring-boot-starter
-mvn clean install
+```xml
+<dependency>
+    <groupId>io.github.yoneljorge</groupId>
+    <artifactId>telegrambot-spring-boot-starter</artifactId>
+    <version>0.0.1</version>
+</dependency>
+```
+
+O si usas Gradle:
+Groovy
+```groovy
+implementation 'io.github.yoneljorge:telegrambot-spring-boot-starter:0.0.1'
 ```
 
 ## 🚀 Modo de Uso

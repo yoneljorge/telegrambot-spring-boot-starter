@@ -3,19 +3,52 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>dev.yonel</groupId>
+    <groupId>io.github.yoneljorge</groupId>
     <artifactId>telegrambot-spring-boot-starter</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
+
     <name>Telegram Bot Spring Boot Starter</name>
     <description>Spring Boot Starter for Telegram Bot API integration</description>
-
     <url>https://github.com/yoneljorge/telegrambot-spring-boot-starter</url>
+
+    <licenses>
+        <license>
+            <name>The MIT License</name>
+            <url>https://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/yoneljorge/telegrambot-spring-boot-starter.git</connection>
+        <developerConnection>scm:git:ssh://github.com:yoneljorge/telegrambot-spring-boot-starter.git</developerConnection>
+        <url>https://github.com/yoneljorge/telegrambot-spring-boot-starter</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/yoneljorge/telegrambot-spring-boot-starter/issues</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>yoneljorge</id>
+            <name>Yonel Jorge Sanchez Cantillo</name>
+            <email>yoneljorge@gmail.com</email>
+            <url>https://github.com/yoneljorge</url>
+            <organization>QueFacil!</organization>
+            <organizationUrl>https://github.com/yoneljorge</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+    </developers>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.7</version>
+		<version>3.5.9</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -85,14 +118,46 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <doclint>none</doclint>
+                            <quiet>true</quiet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.2.7</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.6.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
-    <!-- CONFIGURACIÓN PARA PUBLICAR EN GITHUB PACKAGES -->
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub yoneljorge Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/yoneljorge/telegrambot-spring-boot-starter</url>
-        </repository>
-    </distributionManagement>
 </project>

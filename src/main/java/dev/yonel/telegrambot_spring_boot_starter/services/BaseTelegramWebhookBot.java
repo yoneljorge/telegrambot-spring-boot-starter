@@ -74,7 +74,6 @@ public class BaseTelegramWebhookBot extends TelegramWebhookBot implements Messag
     @Override
     public void onRegister() {
         super.onRegister();
-        log.info(">>>>> Bot registrado exitosamente en Telegram <<<<<");
     }
 
     @Override
@@ -96,7 +95,7 @@ public class BaseTelegramWebhookBot extends TelegramWebhookBot implements Messag
         Long chatId = update.getMessage().getChatId();
         String chatType = update.getMessage().getChat().getType();
 
-        log.info("Mensaje recibido del chat ID: {}, tipo: {}, usuario ID: {}", chatId, chatType,
+        log.debug("Mensaje recibido del chat ID: {}, tipo: {}, usuario ID: {}", chatId, chatType,
                 userId);
         processPrivateMessage(update, bot);
 
@@ -157,8 +156,6 @@ public class BaseTelegramWebhookBot extends TelegramWebhookBot implements Messag
              */
             return; // No se puede obtener la información del chat
         }
-        log.info("CallbackQuery recibido del chat ID: {}, tipo: {}, usuario ID: {}", chatId, chatType,
-                userId);
         try {
             handleResponse(convertToObject(telegramPlatform.removeButtons(update, new ResponseBody())), bot);
             handleResponse(convertToObject(telegramPlatform.receivedRequestMessageFromPrivate(bot, update, null)), bot);
@@ -193,7 +190,6 @@ public class BaseTelegramWebhookBot extends TelegramWebhookBot implements Messag
                                SessionManager.getContext(Long.parseLong(sendMessage.getChatId())),
                                 bot);
                         if (sendMessage.isRemovable()) {
-                            log.info("marcando mensaje para eliminar");
                             Message message = execute(sendMessage);
                             returnedMessages.add(message);
                         } else {
@@ -267,7 +263,6 @@ public class BaseTelegramWebhookBot extends TelegramWebhookBot implements Messag
 
                 UserSessionContext context = SessionManager.getContext(userId);
                 context.getBotSession(bot).setMessageIdToDelete(messageId);
-                System.out.println("agregado mensajeid a context");
             }
         }
     }
@@ -310,7 +305,6 @@ public class BaseTelegramWebhookBot extends TelegramWebhookBot implements Messag
 
     protected <T> List<Object> convertToObject(List<T> list) {
         if (list == null) {
-            log.info(">>>>>>>> Lista de respuestas null, revisar código");
             return new ArrayList<>();
         }
         List<Object> objectList = new ArrayList<>();
@@ -330,7 +324,6 @@ public class BaseTelegramWebhookBot extends TelegramWebhookBot implements Messag
 
         try {
             execute(deleteMessage);
-            log.info("exito eliminando mensaje marcado");
         } catch (TelegramApiException e) {
             log.error("error eliminando mensaje marcado para eliminar");
         }

@@ -28,32 +28,27 @@ public class MessageQueueService {
 
         if (text != null) {
             //FIXME quitar esto en produccion
-            log.info("Nuevo message: {}", text);
+            log.debug("Nuevo message: {}", text);
             if (!mensajesProcesados.containsKey(message.getUpdateid())) {
 
                 //FIXME quitar esto en produccion
-                log.info("Mensaje encolado: {}", text);
+                log.debug("Mensaje encolado: {}", text);
                 colaDeMensajes.offer(message);
                 mensajesProcesados.put(message.getUpdateid(), true);
                 procesarMensajesEnCola(); // Iniciar el procesamiento si es necesario
             } else {
-                log.info("Mensaje no encolado: {}", text);
+                log.debug("Mensaje no encolado: {}", text);
             }
         }
     }
 
     @Async
     public void procesarMensajesEnCola() {
-        TelegramIncomingMessage message;
+        TelegramIncomingMessage<AbstractTelegramBot> message;
         while ((message = colaDeMensajes.poll()) != null) {
             try {
-                // Lógica de procesamiento del mensaje y respuesta al bot de Telegram
-                log.info("Procesando mensaje");
                 AbstractTelegramBot botInstance = message.getBot();
-
                 botInstance.onWebhookUpdateReceived(message.getUpdateMessage());
-
-                log.info("Mensaje procesado: " + message.getUpdateid());
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
                 // Considerar reenviar a una cola de errores local si es necesario
@@ -66,7 +61,6 @@ public class MessageQueueService {
     public void removeMensajesProcesados(int updateid) {
         try {
             mensajesProcesados.remove(updateid);
-            log.info("Removiendo mensaje procesado");
         } catch (Exception e) {
             log.error("Error eliminando mensaje procesado.");
         }

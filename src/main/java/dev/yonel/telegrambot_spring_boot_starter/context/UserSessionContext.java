@@ -72,35 +72,39 @@ public class UserSessionContext {
          *
          * @param activeFlow El nombre del flujo que se activa.
          */
-        public void setActiveFlow(String activeFlow) {
+        public BotSession setActiveFlow(String activeFlow) {
             this.flowList.add(activeFlow);
             this.step = 0;
+            return this;
         }
 
         /**
          * Elimina el último flujo de conversación activo para este usuario.
          * Al eliminar un flujo de conversación, se reinicia el paso actual a 0.
          */
-        public void removeLastActiveFlow() {
+        public BotSession removeLastActiveFlow() {
             if (!flowList.isEmpty()) {
                 flowList.removeLast();
             }
             this.step = 0;
+            return this;
         }
 
         /**
          * Incrementa el paso actual dentro del flujo de conversación activo.
          * Se utiliza para avanzar a la siguiente etapa lógica dentro de un flujo.
          */
-        public void nextStep() {
+        public BotSession nextStep() {
             this.step++;
+            return this;
         }
 
         /**
          * Se reinicia el paso actual a 0.
          */
-        public void resetStep() {
+        public BotSession resetStep() {
             this.step = 0;
+            return this;
         }
 
         /**
@@ -108,10 +112,11 @@ public class UserSessionContext {
          * Esto implica establecer el flujo activo a `null`, el paso actual a 0 y
          * eliminar todos los datos temporales almacenados.
          */
-        public void reset() {
+        public BotSession reset() {
             this.flowList.clear();
             this.step = 0;
             this.data.clear();
+            return this;
         }
 
         /**
@@ -122,22 +127,12 @@ public class UserSessionContext {
          * @param value El objeto que se desea almacenar.
          */
         @SuppressWarnings("unchecked")
-        public <T> void putData(SessionKey key, T value) {
+        public <T> BotSession putData(SessionAttribute key, T value) {
             if (value == null) {
                 throw new IllegalArgumentException("El valor no puede ser nulo");
             }
             data.put(key.value(), new TypedValue<>(value, (Class<T>) value.getClass()));
-        }
-
-        @SuppressWarnings("unchecked")
-        public <T> void putStandartData(String key, T value) {
-            if (!SessionKey.isValid(key)) {
-                throw new IllegalArgumentException("Clave no permitida: " + key);
-            }
-            if (value == null) {
-                throw new IllegalArgumentException("El valor no puede ser nulo");
-            }
-            data.put(key, new TypedValue<>(value, (Class<T>) value.getClass()));
+            return this;
         }
 
         /**
@@ -149,7 +144,7 @@ public class UserSessionContext {
          *         no existe.
          */
         @SuppressWarnings("unchecked")
-        public <T> T getData(SessionKey key) {
+        public <T> T getData(SessionAttribute key) {
             TypedValue<?> typedValue = data.get(key.value());
 
             if (typedValue == null) {
@@ -163,30 +158,14 @@ public class UserSessionContext {
             }
         }
 
-        @SuppressWarnings("unchecked")
-        public <T> T getStandartData(String key) {
-            if (!SessionKey.isValid(key)) {
-                throw new IllegalArgumentException("Clave no permitida: " + key);
-            }
-            TypedValue<?> typedValue = data.get(key);
-
-            if (typedValue == null) {
-                return null; // Si no existe el dato, retorna null
-            }
-
-            try {
-                return (T) typedValue.value; // Retorna el valor almacenado, casteado al tipo esperado
-            } catch (ClassCastException e) {
-                throw new IllegalStateException("Tipo de dato no coincide para la clave: " + key, e);
-            }
-        }
-
-        public <T> void removeData(SessionKey key) {
+        public <T> BotSession removeData(SessionAttribute key) {
             data.remove(key.value());
+            return this;
         }
 
-        public void cleanData() {
+        public BotSession cleanData() {
             this.data.clear();
+            return this;
         }
 
         /**
@@ -195,9 +174,10 @@ public class UserSessionContext {
          * @param messageId id del mensaje a eliminar
          * 
          */
-        public void setMessageIdToDelete(Integer messageId) {
+        public BotSession setMessageIdToDelete(Integer messageId) {
             messagesToDelete.add(messageId);
             pendingMessageToDelete = true;
+            return this;
         }
 
         /**
